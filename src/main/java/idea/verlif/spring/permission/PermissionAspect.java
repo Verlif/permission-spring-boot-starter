@@ -67,7 +67,7 @@ public class PermissionAspect {
             return permissionHandler.onNoPermission(user, perm, method);
         } else if (perm.noRole().length() > 0 && !permissionDetector.noRole(user, perm.noRole())) {
             return permissionHandler.onNoPermission(user, perm, method);
-        } else if (perm.noKey().length() > 0 || !permissionDetector.noKey(user, perm.noKey())) {
+        } else if (perm.noKey().length() > 0 && !permissionDetector.noKey(user, perm.noKey())) {
             return permissionHandler.onNoPermission(user, perm, method);
         }
         return null;
