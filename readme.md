@@ -1,7 +1,19 @@
 # Permission
 
 接口权限控制  
-使用注解方式的接口权限控制，快捷配置快速使用。
+轻量级的访问权限控制，一个注解与一个接口即可完成权限控制。  
+
+本组件**适用**于以下项目:
+
+* 需要对不同的用户做不同的权限控制
+* 需要对接口做组合权限判定
+
+**不适用**于以下项目（推荐使用 [接口限制器](https://github.com/Verlif/limit-spring-boot-starter) ）:
+
+* 没有登录系统
+* 没有角色等访问者身份区分方式
+
+*注：完整注释请clone本项目*
 
 ## 添加
 
@@ -25,7 +37,7 @@
 >        <dependency>
 >            <groupId>com.github.Verlif</groupId>
 >            <artifactId>permission-spring-boot-starter</artifactId>
->            <version>2.6.3-beta0.1</version>
+>            <version>2.6.3-0.1</version>
 >        </dependency>
 >    </dependencies>
 > ```
@@ -36,7 +48,7 @@
 
 ## 使用
 
-### 实现`PermissionHandler`接口
+### 实现`PermissionHandler`接口（可选）
 
 `PermissionHandler`是权限处理接口，用于对权限无法通过的处理。  
 内置的实现类会抛出`NoPermDataException`与`NoPermissionException`异常，可以通过 [全局异常处理](https://github.com/Verlif/exception-spring-boot-starter) 组件来处理这些异常，
@@ -58,7 +70,7 @@ public class DefaultPermissionHandler implements PermissionHandler {
 }
 ```
 
-### 实现`PermissionDetector`接口
+### 实现`PermissionDetector`接口（**必选**）
 
 `PermissionDetector`是权限判定接口，是权限判定核心。内置的实现类实现了基础的权限判定，但未实现权限数据的获取。  
 开发者**必须**实现自己的判定实例。实现后与`PermissionHandler`相同，需要自定注入Bean池中。
@@ -79,12 +91,17 @@ public class DefaultPermissionDetector implements PermissionDetector<Object> {
         return data.getKeys().stream().anyMatch(s -> s.equals(key));
     }
 
+    /**
+     * 主要实现以下方法，这个方法用于获取当前的访问者权限数据
+     **/
     @Override
     public PermData<Object> getRequestData() {
         return null;
     }
 }
 ```
+
+`PermData`是一个权限数据接口。一般的应用场景是让项目中的`User`去实现这个接口，然后在上面的`getRequestData()`方法中返回访问者的`User`对象。
 
 ## 用他！
 

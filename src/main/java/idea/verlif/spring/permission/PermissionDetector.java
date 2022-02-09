@@ -54,6 +54,8 @@ public interface PermissionDetector<T> {
 
     /**
      * 获取当前的请求数据对象
+     *
+     * @return 权限数据对象。一般情况下是返回实现了这个接口的用户对象
      */
     PermData<T> getRequestData();
 }
