@@ -37,7 +37,7 @@
 >        <dependency>
 >            <groupId>com.github.Verlif</groupId>
 >            <artifactId>permission-spring-boot-starter</artifactId>
->            <version>2.6.6-0.1</version>
+>            <version>2.6.6-0.2</version>
 >        </dependency>
 >    </dependencies>
 > ```
