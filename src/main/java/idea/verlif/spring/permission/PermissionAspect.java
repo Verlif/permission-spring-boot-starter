@@ -7,11 +7,11 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
 /**
@@ -23,15 +23,18 @@ import java.lang.reflect.Method;
  */
 @Aspect
 @Component
-@ConditionalOnProperty(prefix = "station.permission", value = "enable", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "station.permission", value = "enabled", matchIfMissing = true)
 @Import(PermissionConfig.class)
 public class PermissionAspect {
 
-    @Resource
+    @Autowired
     private PermissionDetector permissionDetector;
 
-    @Resource
+    @Autowired
     private PermissionHandler permissionHandler;
+
+    public PermissionAspect() {
+    }
 
     @Around("@within(idea.verlif.spring.permission.anno.Perm) || @annotation(idea.verlif.spring.permission.anno.Perm)")
     public Object dsPointCut(ProceedingJoinPoint joinPoint) throws Throwable {

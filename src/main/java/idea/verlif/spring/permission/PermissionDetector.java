@@ -11,20 +11,20 @@ package idea.verlif.spring.permission;
 public interface PermissionDetector<T> {
 
     /**
-     * 是否拥有角色
+     * 权限数据是否拥有角色
      *
-     * @param data 判定对象
-     * @param role 角色名称
-     * @return true - 拥有；false - 未拥有
+     * @param data 权限数据，从下面的{@link #getRequestData()}获取的权限数据
+     * @param role @Perm的hasRole参数
+     * @return 权限数据是否拥有角色
      */
     boolean hasRole(PermData<T> data, T role);
 
     /**
-     * 是否拥有关键词
+     * 权限数据是否拥有权限
      *
-     * @param data 判定对象
-     * @param key  关键词
-     * @return true - 拥有；false - 未拥有
+     * @param data 权限数据，从下面的{@link #getRequestData()}获取的权限数据
+     * @param key  @Perm的hasKey参数
+     * @return 权限数据是否拥有权限
      */
     boolean hasKey(PermData<T> data, String key);
 
